@@ -1,14 +1,14 @@
+// route/router.go
 package route
 
 import (
-	"log"
+	"net/http"
 	"rest-api/controller"
-
-	"github.com/gorilla/mux"
 )
 
-func RegisterRoutes(router *mux.Router, userController *controller.UserController) {
-	log.Fatal(("Hello form the router"))
-
-	router.HandleFunc("/user", userController.GetUserHandler).Methods("GET")
+func RegisterRoutes(uc *controller.UserController) {
+	http.HandleFunc("/users", uc.GetUserHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.NotFound(w, r)
+	})
 }

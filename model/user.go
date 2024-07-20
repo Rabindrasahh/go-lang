@@ -3,29 +3,36 @@ package model
 import (
 	"database/sql"
 	"fmt"
+	"log"
 )
 
-// User represents a user in the database
 type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Class string `json:"class"`
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Class    string `json:"class"`
+	Password string `json:"password"`
 }
 
-// GetUserByID retrieves a user by ID from the database
-func GetUserByID(db *sql.DB, id int) (*User, error) {
-	query := "SELECT id, name, email, class FROM users WHERE id = $1"
-	row := db.QueryRow(query, id)
-
-	var user User
-	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.Class)
+func GetAllUsers(db *sql.DB) ([]User, error) {
+	log.Println("GetAllUsers called")
+	rows, err := db.Query("SELECT id, name, email, class, password FROM users")
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, fmt.Errorf("User not found")
-		}
-		return nil, fmt.Errorf("Error querying user: %v", err)
+		return nil, fmt.Errorf("GetAllUsers: %v", err)
 	}
+	defer rows.Close()
 
-	return &user, nil
+	var users []User
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Class, &user.Password); err != nil {
+			return nil, fmt.Errorf("GetAllUsers: %v", err)
+		}
+		users = append(users, user)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("GetAllUsers: %v", err)
+	}
+	log.Println("GetAllUsers completed successfully")
+	return users, nil
 }
