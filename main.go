@@ -8,7 +8,6 @@ import (
 	"rest-api/route"
 	"rest-api/service/db"
 
-	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -23,11 +22,8 @@ func main() {
 	// Create a new UserController instance
 	userController := &controller.UserController{DB: db.Conn}
 
-	// Create a new router
-	r := mux.NewRouter()
-
 	// Register routes
-	route.RegisterRoutes(r, userController)
+	route.RegisterRoutes(userController)
 
 	port := os.Getenv("PORT")
 	if port == "" {

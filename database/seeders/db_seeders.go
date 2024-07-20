@@ -1,14 +1,22 @@
 package seeders
 
 import (
-	"database/sql"
-	"log"
+    "database/sql"
+    "log"
+    "time"
 )
 
 func RunSeeders(db *sql.DB) {
-	log.Println("Starting database seeding...")
-	//\\== Comment if not require seeders ==//\\
-	// SeedUsers(db)
+    log.Println("Starting database seeding...")
 
-	log.Println("Database seeding completed.")
+    // Start measuring time
+    startTime := time.Now()
+
+    //\\== Comment if not require seeders ==//\\
+    SeedUsers(db)
+
+    // Calculate elapsed time
+    elapsedTime := time.Since(startTime)
+
+    log.Printf("Database seeding completed in %s.", elapsedTime)
 }

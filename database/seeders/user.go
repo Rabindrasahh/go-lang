@@ -14,7 +14,7 @@ func SeedUsers(db *sql.DB) {
 
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 5; i++ {
 		_, err := db.Exec(query, faker.Name(), faker.Email(), randomClass(rng), faker.Password())
 		if err != nil {
 			log.Fatalf("Error seeding user: %v", err)

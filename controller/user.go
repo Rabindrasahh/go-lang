@@ -3,34 +3,27 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 	"rest-api/model"
-	"strconv"
 )
 
-// UserController handles user-related requests
 type UserController struct {
 	DB *sql.DB
 }
 
-// GetUserHandler handles GET requests to retrieve a user by ID
 func (uc *UserController) GetUserHandler(w http.ResponseWriter, r *http.Request) {
-
-	idStr := r.URL.Query().Get("id")
-	id, err := strconv.Atoi(idStr)
-	if err != nil || id <= 0 {
-		http.Error(w, "Invalid user ID", http.StatusBadRequest)
-		return
-	}
-
-	user, err := model.GetUserByID(uc.DB, id)
+	log.Println("GetUserHandler called")
+	users, err := model.GetAllUsers(uc.DB)
 	if err != nil {
-		http.Error(w, "User not found", http.StatusNotFound)
+		log.Printf("Error getting users: %v", err)
+		http.Error(w, "Error getting users", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(user); err != nil {
+	if err := json.NewEncoder(w).Encode(users); err != nil {
+		log.Printf("Error encoding user data: %v", err)
 		http.Error(w, "Error encoding user data", http.StatusInternalServerError)
 	}
 }
