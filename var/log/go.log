@@ -1,22 +1,29 @@
-2024/07/20 13:32:06 Successfully connected to the database
-2024/07/20 13:32:06 Starting database migrations...
-2024/07/20 13:32:06 Users table created successfully
-2024/07/20 13:32:06 Database migrations completed.
-2024/07/20 13:32:06 Starting database seeding...
-2024/07/20 13:37:55 User seeding completed
-2024/07/20 13:37:55 Database seeding completed in 5m48.891731s.
-2024/07/20 13:37:55 Starting server on :8000
-2024/07/20 13:38:34 GetUserHandler called
-2024/07/20 13:38:34 GetAllUsers called
-2024/07/20 13:38:35 GetAllUsers completed successfully
-2024/07/20 13:39:46 Successfully connected to the database
-2024/07/20 13:39:46 Starting database migrations...
-2024/07/20 13:39:46 Users table created successfully
-2024/07/20 13:39:46 Database migrations completed.
-2024/07/20 13:39:46 Starting database seeding...
-2024/07/20 13:39:46 User seeding completed
-2024/07/20 13:39:46 Database seeding completed in 13.9071ms.
-2024/07/20 13:39:46 Starting server on :8000
-2024/07/20 13:40:09 GetUserHandler called
-2024/07/20 13:40:09 GetAllUsers called
-2024/07/20 13:40:09 GetAllUsers completed successfully
+2024/07/20 14:44:56 Successfully connected to the database
+2024/07/20 14:44:56 Starting database migrations...
+2024/07/20 14:44:56 Users table created successfully
+2024/07/20 14:44:56 Database migrations completed.
+2024/07/20 14:44:56 Starting database seeding...
+2024/07/20 14:44:56 User seeding completed
+2024/07/20 14:44:56 Database seeding completed in 6.548ms.
+2024/07/20 14:44:56 Starting server on :8000
+2024/07/20 14:45:03 GetUserHandler called
+2024/07/20 14:45:07 GetUserHandler called
+2024/07/20 14:47:26 Successfully connected to the database
+2024/07/20 14:47:26 Starting database migrations...
+2024/07/20 14:47:26 Users table created successfully
+2024/07/20 14:47:26 Database migrations completed.
+2024/07/20 14:47:26 Starting database seeding...
+2024/07/20 14:47:26 User seeding completed
+2024/07/20 14:47:26 Database seeding completed in 5.3323ms.
+2024/07/20 14:47:26 Starting server on :8000
+2024/07/20 14:47:32 GetUserHandler called
+2024/07/20 14:47:32 Current page is 1
+2024/07/20 14:47:32 The page size is 5
+2024/07/20 14:48:07 GetUserHandler called
+2024/07/20 14:48:07 Current page is 2
+2024/07/20 14:48:07 The page size is 1
+2024/07/20 14:48:07 Current page is 2
+2024/07/20 14:48:07 The page size is 1
+2024/07/20 14:48:26 GetUserHandler called
+2024/07/20 14:48:26 Current page is 1
+2024/07/20 14:48:26 The page size is 5
