@@ -8,27 +8,35 @@ import (
 	"rest-api/route"
 	"rest-api/service/db"
 
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Load environment variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
+
+	// Initialize the database
 	db.Init()
 	defer db.Close()
 
-	userController := &controller.UserController{DB: db.Conn}
+	// Create a new router
+	r := mux.NewRouter()
 
-	route.RegisterRoutes(userController)
+	// Register routes
+	userController := controller.UserController{DB: db.Conn}
+	route.RegisterRoutes(r, &userController)
 
+	// Get the port from environment variables
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is required")
 	}
 
+	// Start the server
 	log.Printf("Starting server on :%s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
-
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }

@@ -44,3 +44,48 @@
 2024/07/20 23:43:09 Starting database seeding...
 2024/07/20 23:43:09 Database seeding completed in 0s.
 2024/07/20 23:43:09 Starting server on :8000
+2024/07/21 00:01:22 Successfully connected to the database
+2024/07/21 00:01:22 Starting database migrations...
+2024/07/21 00:01:22 Users table created successfully
+2024/07/21 00:01:22 Database migrations completed.
+2024/07/21 00:01:22 Starting database seeding...
+2024/07/21 00:01:22 Database seeding completed in 0s.
+2024/07/21 00:02:28 Successfully connected to the database
+2024/07/21 00:02:28 Starting database migrations...
+2024/07/21 00:02:28 Users table created successfully
+2024/07/21 00:02:28 Database migrations completed.
+2024/07/21 00:02:28 Starting database seeding...
+2024/07/21 00:02:28 Database seeding completed in 0s.
+2024/07/21 00:02:28 Starting server on :8000
+2024/07/21 00:02:36 GetUserHandler called
+2024/07/21 00:05:44 Successfully connected to the database
+2024/07/21 00:05:44 Starting database migrations...
+2024/07/21 00:05:44 Users table created successfully
+2024/07/21 00:05:44 Database migrations completed.
+2024/07/21 00:05:44 Starting database seeding...
+2024/07/21 00:05:44 Database seeding completed in 0s.
+2024/07/21 00:05:44 Starting server on :8000
+2024/07/21 00:11:50 Successfully connected to the database
+2024/07/21 00:11:50 Starting database migrations...
+2024/07/21 00:11:50 Users table created successfully
+2024/07/21 00:11:50 Database migrations completed.
+2024/07/21 00:11:50 Starting database seeding...
+2024/07/21 00:11:50 Database seeding completed in 0s.
+2024/07/21 00:11:50 Starting server on :8000
+2024/07/21 00:12:36 Successfully connected to the database
+2024/07/21 00:12:36 Starting database migrations...
+2024/07/21 00:12:36 Users table created successfully
+2024/07/21 00:12:36 Database migrations completed.
+2024/07/21 00:12:36 Starting database seeding...
+2024/07/21 00:12:36 Database seeding completed in 0s.
+2024/07/21 00:12:36 Starting server on :8000
+2024/07/21 00:12:41 GetUserHandler called
+2024/07/21 00:19:24 Successfully connected to the database
+2024/07/21 00:19:24 Starting database migrations...
+2024/07/21 00:19:24 Users table created successfully
+2024/07/21 00:19:24 Database migrations completed.
+2024/07/21 00:19:24 Starting database seeding...
+2024/07/21 00:19:24 Database seeding completed in 0s.
+2024/07/21 00:19:24 Starting server on :8000
+2024/07/21 00:19:31 GetUserHandler called
+2024/07/21 00:19:33 GetUserHandler called
