@@ -1,29 +1,46 @@
-2024/07/20 14:44:56 Successfully connected to the database
-2024/07/20 14:44:56 Starting database migrations...
-2024/07/20 14:44:56 Users table created successfully
-2024/07/20 14:44:56 Database migrations completed.
-2024/07/20 14:44:56 Starting database seeding...
-2024/07/20 14:44:56 User seeding completed
-2024/07/20 14:44:56 Database seeding completed in 6.548ms.
-2024/07/20 14:44:56 Starting server on :8000
-2024/07/20 14:45:03 GetUserHandler called
-2024/07/20 14:45:07 GetUserHandler called
-2024/07/20 14:47:26 Successfully connected to the database
-2024/07/20 14:47:26 Starting database migrations...
-2024/07/20 14:47:26 Users table created successfully
-2024/07/20 14:47:26 Database migrations completed.
-2024/07/20 14:47:26 Starting database seeding...
-2024/07/20 14:47:26 User seeding completed
-2024/07/20 14:47:26 Database seeding completed in 5.3323ms.
-2024/07/20 14:47:26 Starting server on :8000
-2024/07/20 14:47:32 GetUserHandler called
-2024/07/20 14:47:32 Current page is 1
-2024/07/20 14:47:32 The page size is 5
-2024/07/20 14:48:07 GetUserHandler called
-2024/07/20 14:48:07 Current page is 2
-2024/07/20 14:48:07 The page size is 1
-2024/07/20 14:48:07 Current page is 2
-2024/07/20 14:48:07 The page size is 1
-2024/07/20 14:48:26 GetUserHandler called
-2024/07/20 14:48:26 Current page is 1
-2024/07/20 14:48:26 The page size is 5
+2024/07/20 23:21:03 Successfully connected to the database
+2024/07/20 23:21:03 Starting database migrations...
+2024/07/20 23:21:03 Users table created successfully
+2024/07/20 23:21:03 Database migrations completed.
+2024/07/20 23:21:03 Starting database seeding...
+2024/07/20 23:21:03 Database seeding completed in 0s.
+2024/07/20 23:24:27 Successfully connected to the database
+2024/07/20 23:24:27 Starting database migrations...
+2024/07/20 23:24:27 Users table created successfully
+2024/07/20 23:24:27 Database migrations completed.
+2024/07/20 23:24:27 Starting database seeding...
+2024/07/20 23:24:27 Database seeding completed in 0s.
+2024/07/20 23:24:27 Starting server on :8000
+2024/07/20 23:24:36 GetUserHandler called
+2024/07/20 23:24:39 GetUserHandler called
+2024/07/20 23:28:21 Successfully connected to the database
+2024/07/20 23:28:21 Starting database migrations...
+2024/07/20 23:28:21 Users table created successfully
+2024/07/20 23:28:21 Database migrations completed.
+2024/07/20 23:28:21 Starting database seeding...
+2024/07/20 23:28:21 Database seeding completed in 0s.
+2024/07/20 23:28:21 Starting server on :8080
+2024/07/20 23:28:41 GetUserHandler called
+2024/07/20 23:41:45 Successfully connected to the database
+2024/07/20 23:41:45 Starting database migrations...
+2024/07/20 23:41:45 Users table created successfully
+2024/07/20 23:41:45 Database migrations completed.
+2024/07/20 23:41:45 Starting database seeding...
+2024/07/20 23:41:45 Database seeding completed in 0s.
+2024/07/20 23:41:45 Starting server on :8000
+2024/07/20 23:41:53 GetUserHandler called
+2024/07/20 23:41:55 GetUserHandler called
+2024/07/20 23:41:55 GetUserHandler called
+2024/07/20 23:41:55 GetUserHandler called
+2024/07/20 23:41:55 GetUserHandler called
+2024/07/20 23:41:56 GetUserHandler called
+2024/07/20 23:41:58 GetUserHandler called
+2024/07/20 23:42:03 GetUserHandler called
+2024/07/20 23:42:41 DB_PASSWORD environment variable is required
+2024/07/20 23:43:09 Successfully connected to the database
+2024/07/20 23:43:09 Starting database migrations...
+2024/07/20 23:43:09 Users table created successfully
+2024/07/20 23:43:09 Database migrations completed.
+2024/07/20 23:43:09 Starting database seeding...
+2024/07/20 23:43:09 Database seeding completed in 0s.
+2024/07/20 23:43:09 Starting server on :8000

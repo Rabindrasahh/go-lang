@@ -19,10 +19,8 @@ func main() {
 	db.Init()
 	defer db.Close()
 
-	// Create a new UserController instance
 	userController := &controller.UserController{DB: db.Conn}
 
-	// Register routes
 	route.RegisterRoutes(userController)
 
 	port := os.Getenv("PORT")
