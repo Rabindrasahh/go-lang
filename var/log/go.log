@@ -1,0 +1,24 @@
+2024/07/19 23:45:25 Logging initialized
+2024/07/19 23:45:25 Successfully connected to the database
+2024/07/19 23:45:25 Starting database migrations...
+2024/07/19 23:45:25 Users table created successfully
+2024/07/19 23:45:25 Database migrations completed.
+2024/07/19 23:45:25 Starting database seeding...
+2024/07/19 23:45:25 Database seeding completed.
+2024/07/19 23:45:25 Starting server on :8000
+2024/07/19 23:51:59 Logging initialized
+2024/07/19 23:51:59 Successfully connected to the database
+2024/07/19 23:51:59 Starting database migrations...
+2024/07/19 23:51:59 Users table created successfully
+2024/07/19 23:51:59 Database migrations completed.
+2024/07/19 23:51:59 Starting database seeding...
+2024/07/19 23:51:59 Database seeding completed.
+2024/07/19 23:51:59 Starting server on :8000
+2024/07/20 00:01:23 Logging initialized
+2024/07/20 00:01:23 Successfully connected to the database
+2024/07/20 00:01:23 Starting database migrations...
+2024/07/20 00:01:23 Users table created successfully
+2024/07/20 00:01:23 Database migrations completed.
+2024/07/20 00:01:23 Starting database seeding...
+2024/07/20 00:01:23 Database seeding completed.
+2024/07/20 00:01:23 Hello form the router
