@@ -25,6 +25,6 @@ func SeedUsers(db *sql.DB) {
 }
 
 func randomClass(rng *rand.Rand) string {
-	classes := []string{"Class A", "Class B", "Class C", "Class D"}
+	classes := []string{"Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8"}
 	return classes[rng.Intn(len(classes))]
 }
