@@ -14,6 +14,7 @@ import (
 var Conn *sql.DB
 
 func Init() {
+	// creating log file if it doesn't exist and add log in that file
 	logDir := "var/log"
 	if _, err := os.Stat(logDir); os.IsNotExist(err) {
 		err := os.MkdirAll(logDir, 0777)
