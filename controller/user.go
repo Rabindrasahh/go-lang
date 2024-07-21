@@ -56,3 +56,35 @@ func (uc *UserController) GetUserHandler(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "Error encoding user data", http.StatusInternalServerError)
 	}
 }
+
+func (uc *UserController) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("CreateUserHandler called")
+
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var user model.User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		log.Printf("Error decoding request body: %v", err)
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	// Create user in the database
+	createdUser, err := model.CreateUser(uc.DB, user)
+	if err != nil {
+		log.Printf("Error creating user: %v", err)
+		http.Error(w, "Error creating user", http.StatusInternalServerError)
+		return
+	}
+
+	// Respond with the created user
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	if err := json.NewEncoder(w).Encode(createdUser); err != nil {
+		log.Printf("Error encoding user data: %v", err)
+		http.Error(w, "Error encoding user data", http.StatusInternalServerError)
+	}
+}

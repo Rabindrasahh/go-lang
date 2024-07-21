@@ -3,6 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
+
+	"rest-api/helper"
 )
 
 type User struct {
@@ -34,4 +36,20 @@ func GetAllUsers(db *sql.DB, page int, pageSize int) ([]User, error) {
 		return nil, fmt.Errorf("GetAllUsers: %v", err)
 	}
 	return users, nil
+}
+
+func CreateUser(db *sql.DB, user User) (User, error) {
+	hashedPassword, err := helper.HashPassword(user.Password)
+	if err != nil {
+		return User{}, fmt.Errorf("failed to hash password: %v", err)
+	}
+	user.Password = hashedPassword
+
+	query := "INSERT INTO users (name, email, class, password) VALUES ($1, $2, $3, $4) RETURNING id"
+	err = db.QueryRow(query, user.Name, user.Email, user.Class, user.Password).Scan(&user.ID)
+	if err != nil {
+		return User{}, fmt.Errorf("failed to create user: %v", err)
+	}
+
+	return user, nil
 }
