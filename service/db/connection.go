@@ -14,6 +14,7 @@ import (
 var Conn *sql.DB
 
 func Init() {
+	// creating log file if it doesn't exist and add log in that file
 	logDir := "var/log"
 	if _, err := os.Stat(logDir); os.IsNotExist(err) {
 		err := os.MkdirAll(logDir, 0777)
@@ -30,21 +31,14 @@ func Init() {
 	}
 	log.SetOutput(logFile)
 	dbUserName := os.Getenv("DB_USERNAME")
-	if dbUserName == "" {
-		log.Fatal("DB_USERNAME environment variable is required")
-	}
 	dbPassword := os.Getenv("DB_PASSWORD")
-	if dbPassword == "" {
-		log.Fatal("DB_PASSWORD environment variable is required")
-	}
 	dbDatabase := os.Getenv("DB_DATABASE")
-	if dbDatabase == "" {
-		log.Fatal("DB_DATABASE environment variable is required")
-	}
 	sslMode := os.Getenv("SSLMODE")
-	if sslMode == "" {
-		log.Fatal("SSLMODE environment variable is required")
+
+	if dbUserName == "" || dbPassword == "" || dbDatabase == "" || sslMode == "" {
+		log.Fatal("Database configuration environment variables are required")
 	}
+
 	databaseURL := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s",
 		dbUserName, dbPassword, dbDatabase, sslMode)
 	// Initialize the database connection
