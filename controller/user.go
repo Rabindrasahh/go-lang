@@ -1,62 +1,23 @@
 package controller
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"log"
 	"net/http"
-	"rest-api/config"
 	"rest-api/model"
-	"strconv"
+	"rest-api/service"
+	"time"
 )
 
+// UserController handles user-related requests.
 type UserController struct {
 	DB *sql.DB
 }
 
-func (uc *UserController) GetUserHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("GetUserHandler called")
-
-	// Parse page number and page size from query parameters
-	pageStr := r.URL.Query().Get("page")
-	pageSizeStr := r.URL.Query().Get("page_size")
-	page := config.DefaultPage
-	pageSize := config.DefaultPageSize
-
-	if pageStr != "" {
-		var err error
-		page, err = strconv.Atoi(pageStr)
-
-		if err != nil || page < 1 {
-			http.Error(w, "Invalid page number", http.StatusBadRequest)
-			return
-		}
-	}
-
-	if pageSizeStr != "" {
-		var err error
-		pageSize, err = strconv.Atoi(pageSizeStr)
-
-		if err != nil || pageSize < 1 {
-			http.Error(w, "Invalid page size", http.StatusBadRequest)
-			return
-		}
-	}
-
-	users, err := model.GetAllUsers(uc.DB, page, pageSize)
-	if err != nil {
-		log.Printf("Error getting users: %v", err)
-		http.Error(w, "Error getting users", http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(users); err != nil {
-		log.Printf("Error encoding user data: %v", err)
-		http.Error(w, "Error encoding user data", http.StatusInternalServerError)
-	}
-}
-
+// CreateUserHandler handles POST requests for creating a new user and sending verification email.
 func (uc *UserController) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("CreateUserHandler called")
 
@@ -72,11 +33,31 @@ func (uc *UserController) CreateUserHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// Create user in the database
+	// Generate email verification token and set default values
+	token, err := generateVerificationToken()
+	if err != nil {
+		log.Printf("Error generating verification token: %v", err)
+		http.Error(w, "Error generating verification token", http.StatusInternalServerError)
+		return
+	}
+	user.EmailVerificationToken = token
+	user.IsEmailVerified = false
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Now()
+
+	// Insert user into the database
 	createdUser, err := model.CreateUser(uc.DB, user)
 	if err != nil {
 		log.Printf("Error creating user: %v", err)
 		http.Error(w, "Error creating user", http.StatusInternalServerError)
+		return
+	}
+
+	// Send verification email
+	verificationURL := "http://localhost:8000/verify?token=" + user.EmailVerificationToken
+	if err := service.SendVerificationEmail(user.Email, "Email Verification", verificationURL); err != nil {
+		log.Printf("Error sending verification email: %v", err)
+		http.Error(w, "Error sending verification email", http.StatusInternalServerError)
 		return
 	}
 
@@ -87,4 +68,46 @@ func (uc *UserController) CreateUserHandler(w http.ResponseWriter, r *http.Reque
 		log.Printf("Error encoding user data: %v", err)
 		http.Error(w, "Error encoding user data", http.StatusInternalServerError)
 	}
+}
+
+// VerifyEmailHandler handles GET requests for email verification.
+func (uc *UserController) VerifyEmailHandler(w http.ResponseWriter, r *http.Request) {
+	token := r.URL.Query().Get("token")
+	if token == "" {
+		http.Error(w, "Verification token is required", http.StatusBadRequest)
+		return
+	}
+
+	// Verify user email using the token
+	user, err := model.VerifyUserEmail(uc.DB, token)
+	if err != nil {
+		log.Printf("Error retrieving user: %v", err)
+		http.Error(w, "Invalid or expired verification token", http.StatusBadRequest)
+		return
+	}
+
+	if user.IsEmailVerified {
+		http.Error(w, "Email is already verified", http.StatusBadRequest)
+		return
+	}
+
+	user.IsEmailVerified = true
+	if err := model.UpdateUser(uc.DB, user); err != nil {
+		log.Printf("Error updating user: %v", err)
+		http.Error(w, "Error verifying email", http.StatusInternalServerError)
+		return
+	}
+
+	// Success message
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Email verified successfully"))
+}
+
+// generateVerificationToken generates a secure random token for email verification.
+func generateVerificationToken() (string, error) {
+	token := make([]byte, 32)
+	if _, err := rand.Read(token); err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(token), nil
 }
