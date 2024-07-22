@@ -59,3 +59,10 @@ func SendHTMLEmail(to, subject, templateName string, data interface{}) error {
 	auth := smtp.PlainAuth("", smtpUser, smtpPassword, smtpHost)
 	return smtp.SendMail(smtpHost+":"+smtpPort, auth, smtpUser, []string{to}, []byte(msg))
 }
+
+func SendVerificationEmail(to, subject, verificationURL string) error {
+	data := map[string]interface{}{
+		"VerificationURL": verificationURL,
+	}
+	return SendHTMLEmail(to, subject, "verification_email.html", data)
+}
