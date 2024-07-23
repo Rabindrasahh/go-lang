@@ -22,7 +22,7 @@ type User struct {
 func CreateUser(db *sql.DB, user User) (User, error) {
 
 	hashedPassword, err := helper.HashPassword(user.Password)
-	
+
 	if err != nil {
 		return User{}, err
 	}
@@ -83,6 +83,22 @@ func GetUserByEmail(db *sql.DB, email string) (User, error) {
 	}
 
 	return user, nil
+}
+
+func UpdateUserPassword(db *sql.DB, userID int, hashedPassword string) error {
+	log.Printf("Attempting to update password for user ID: %d", userID)
+
+	// Use PostgreSQL parameter placeholders $1, $2, etc.
+	query := "UPDATE users SET password = $1 WHERE id = $2"
+	_, err := db.Exec(query, hashedPassword, userID)
+	if err != nil {
+		log.Printf("Error updating password for user ID %d: %v", userID, err)
+		return err
+	}
+
+	log.Printf("Password updated successfully for user ID %d", userID)
+
+	return nil
 }
 
 func UpdateUser(db *sql.DB, user User) error {
