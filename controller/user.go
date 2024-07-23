@@ -246,6 +246,67 @@ func (uc *UserController) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error encoding response", http.StatusInternalServerError)
 	}
 }
+func (uc *UserController) ChangePasswordHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req struct {
+		Email           string `json:"email"`
+		CurrentPassword string `json:"current_password"`
+		NewPassword     string `json:"new_password"`
+	}
+
+	// Decode the request body
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	// Retrieve the user from the database by email
+	user, err := model.GetUserByEmail(uc.DB, req.Email)
+	log.Printf("Fetched user: %+v", user)
+
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	// Verify current password
+	if !helper.CheckPasswordHash(req.CurrentPassword, user.Password) {
+		http.Error(w, "Current password is incorrect", http.StatusUnauthorized)
+		return
+	}
+
+	// Validate new password (implement your own validation logic here)
+	if len(req.NewPassword) < 8 {
+		http.Error(w, "New password must be at least 8 characters long", http.StatusBadRequest)
+		return
+	}
+
+	// Hash the new password
+	hashedPassword, err := helper.HashPassword(req.NewPassword)
+	if err != nil {
+		http.Error(w, "Error hashing new password", http.StatusInternalServerError)
+		return
+	}
+
+	// Update password in the database
+	if err := model.UpdateUserPassword(uc.DB, user.ID, hashedPassword); err != nil {
+		http.Error(w, "Error updating password", http.StatusInternalServerError)
+		return
+	}
+	err = service.SendPasswordChangeNotification(user.Email, user.Name)
+	if err != nil {
+		http.Error(w, "Error sending email notification", http.StatusInternalServerError)
+		return
+	}
+
+	// Respond to the client
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Password changed successfully"))
+}
 
 func generateVerificationToken() (string, error) {
 	token := make([]byte, 32)

@@ -17,6 +17,8 @@ func RegisterRoutes(r *mux.Router, uc *controller.UserController) {
 	// Protected routes
 	protectedRoutes := r.PathPrefix("/protected").Subrouter()
 	protectedRoutes.Use(middleware.AuthMiddleware)
+	protectedRoutes.HandleFunc("/change-password", uc.ChangePasswordHandler).Methods("POST") // New route for password change
+
 	protectedRoutes.HandleFunc("/profile", uc.ProfileHandler).Methods("GET")
 
 	// NotFoundHandler for unmatched routes

@@ -66,3 +66,10 @@ func SendVerificationEmail(to, subject, verificationURL string) error {
 	}
 	return SendHTMLEmail(to, subject, "verification_email.html", data)
 }
+
+func SendPasswordChangeNotification(to, name string) error {
+	data := map[string]interface{}{
+		"Name": name,
+	}
+	return SendHTMLEmail(to, "Password Change Notification", "password_change_email.html", data)
+}
