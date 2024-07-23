@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"log"
-	"rest-api/helper" // Import the helper package for hashing
+	"rest-api/helper"
 	"time"
 )
 
@@ -12,7 +12,7 @@ type User struct {
 	Name                   string    `json:"name"`
 	Email                  string    `json:"email"`
 	Class                  string    `json:"class"`
-	Password               string    `json:"-"`
+	Password               string    `json:"password"`
 	EmailVerificationToken string    `json:"email_verification_token"`
 	IsEmailVerified        bool      `json:"is_email_verified"`
 	CreatedAt              time.Time `json:"created_at"`
@@ -20,7 +20,9 @@ type User struct {
 }
 
 func CreateUser(db *sql.DB, user User) (User, error) {
+
 	hashedPassword, err := helper.HashPassword(user.Password)
+	
 	if err != nil {
 		return User{}, err
 	}
@@ -39,9 +41,7 @@ func CreateUser(db *sql.DB, user User) (User, error) {
 		return User{}, err
 	}
 
-	// Log the created user including password (ensure this is done only in secure contexts)
 	log.Printf("User created successfully: %+v", createdUser)
-
 	return createdUser, nil
 }
 
@@ -54,6 +54,26 @@ func VerifyUserEmail(db *sql.DB, token string) (User, error) {
 
 	var user User
 	err := db.QueryRow(query, token).Scan(&user.ID, &user.Name, &user.Email, &user.Class, &user.Password, &user.EmailVerificationToken, &user.IsEmailVerified, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return User{}, nil
+		}
+		return User{}, err
+	}
+
+	return user, nil
+}
+
+func GetUserByEmail(db *sql.DB, email string) (User, error) {
+	query := `
+        SELECT id, name, email, class, password, email_verification_token, is_email_verified, created_at, updated_at
+        FROM users
+        WHERE email = $1
+    `
+
+	var user User
+	err := db.QueryRow(query, email).Scan(&user.ID, &user.Name, &user.Email, &user.Class, &user.Password, &user.EmailVerificationToken, &user.IsEmailVerified, &user.CreatedAt, &user.UpdatedAt)
 
 	if err != nil {
 		if err == sql.ErrNoRows {
