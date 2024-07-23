@@ -201,28 +201,39 @@ func (uc *UserController) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
+	// Decode the request body
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 
+	// Retrieve the user from the database by email
 	user, err := model.GetUserByEmail(uc.DB, req.Email)
 	if err != nil {
 		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 		return
 	}
 
+	// Check if the user exists and the password is correct
 	if user.ID == 0 || !helper.CheckPasswordHash(req.Password, user.Password) {
 		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 		return
 	}
 
+	// Check if the email is verified
+	if !user.IsEmailVerified {
+		http.Error(w, "Email not verified", http.StatusForbidden)
+		return
+	}
+
+	// Generate a JWT token
 	token, err := auth.GenerateToken(user.ID)
 	if err != nil {
 		http.Error(w, "Error generating token", http.StatusInternalServerError)
 		return
 	}
 
+	// Send the response with the token
 	response := struct {
 		Token string `json:"token"`
 	}{
