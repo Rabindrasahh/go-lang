@@ -9,6 +9,7 @@ func RunMigrations(db *sql.DB) {
 	log.Println("Starting database migrations...")
 
 	CreateUserTable(db)
+	CreateUserTypeTable(db)
 
 	// Add calls to other table migrations here
 	// e.g., CreateOtherTable(db)

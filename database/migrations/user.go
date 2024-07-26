@@ -24,18 +24,19 @@ func CreateUserTable(db *sql.DB) {
 
 	// Create the users table
 	query := `
-        CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            email VARCHAR(100) UNIQUE NOT NULL,
-            class VARCHAR(50) NOT NULL,
-            password VARCHAR(100) NOT NULL,
-            email_verification_token VARCHAR(255) NOT NULL DEFAULT '',
-            is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    `
+		CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			name VARCHAR(100) NOT NULL,
+			email VARCHAR(100) UNIQUE NOT NULL,
+			user_type_id INT NOT NULL,
+			password VARCHAR(100) NOT NULL,
+			email_verification_token VARCHAR(255) NOT NULL DEFAULT '',
+			is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (user_type_id) REFERENCES user_type(id)
+		)
+	`
 	_, err = db.Exec(query)
 	if err != nil {
 		log.Fatalf("Error creating users table: %v", err)
