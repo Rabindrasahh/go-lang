@@ -9,7 +9,6 @@ import (
 )
 
 func RegisterRoutes(r *mux.Router, uc *controller.UserController) {
-	// Public routes
 	r.HandleFunc("/users", uc.CreateUserHandler).Methods("POST")
 	r.HandleFunc("/verify", uc.VerifyEmailHandler).Methods("GET")
 	r.HandleFunc("/login", uc.LoginHandler).Methods("POST")
@@ -17,7 +16,7 @@ func RegisterRoutes(r *mux.Router, uc *controller.UserController) {
 	// Protected routes
 	protectedRoutes := r.PathPrefix("/protected").Subrouter()
 	protectedRoutes.Use(middleware.AuthMiddleware)
-	protectedRoutes.HandleFunc("/change-password", uc.ChangePasswordHandler).Methods("POST") // New route for password change
+	protectedRoutes.HandleFunc("/change-password", uc.ChangePasswordHandler).Methods("POST")
 
 	protectedRoutes.HandleFunc("/profile", uc.ProfileHandler).Methods("GET")
 

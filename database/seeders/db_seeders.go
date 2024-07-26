@@ -13,7 +13,7 @@ func RunSeeders(db *sql.DB) {
 	startTime := time.Now()
 
 	//\\== Comment if not require seeders ==//\\
-	// SeedUsers(db)
+	// SeedUserTypeTable(db)
 
 	// Calculate elapsed time
 	elapsedTime := time.Since(startTime)
